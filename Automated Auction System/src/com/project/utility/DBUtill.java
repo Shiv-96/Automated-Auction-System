@@ -20,7 +20,7 @@ public class DBUtill {
 		String url = "jdbc:mysql://localhost:3306/Auction";
 		
 		try {
-			conn = DriverManager.getConnection(url, "root", "Sangeeta@143");
+			conn = DriverManager.getConnection(url, "root", "shiv");
 			
 			
 		} catch (SQLException e) {
