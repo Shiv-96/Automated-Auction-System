@@ -2,7 +2,10 @@ package com.project.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.project.Exception.ItemException;
 import com.project.beans.ItemList;
@@ -99,6 +102,104 @@ public class ItemDaoImpl implements ItemDao {
 		
 		return message;
 		
+	}
+
+	@Override
+	public String updateItemCount(String name, String itemName, int count) throws ItemException {
+		
+		String message = null;
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("update selleritemlist set Item_Quantity = ? where Item_name = ? and owner = ?");
+			
+			ps.setString(3, name);
+			ps.setInt(1, count);
+			ps.setString(2, itemName);
+			
+			int x = ps.executeUpdate();
+			
+			if(x > 0) {
+				message = "Now number of "+itemName+" is changed and updated quantity is "+count;
+			}
+			else {
+				throw new ItemException("Quantity not changed");
+			}
+			
+		} catch (SQLException | ItemException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return message;
+		
+	}
+
+	@Override
+	public List<ItemList> getSoldItemList() throws ItemException {
+		
+		List<ItemList> items = new ArrayList<>();
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("select * from sellerItemList where Sold_Unsold = 'Sold'");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int id = rs.getInt("Item_Id");
+				String name = rs.getString("Item_name");
+				int price = rs.getInt("Item_Price");
+				int count = rs.getInt("Item_Quantity");
+				String status = rs.getString("Sold_Unsold");
+				String cat = rs.getString("category");
+				String own = rs.getString("Owner");
+				
+				ItemList item = new ItemList(id, name, price, count, status, cat, own);
+				
+				items.add(item);
+				
+			}
+			
+		} catch (SQLException e) {
+
+			throw new ItemException(e.getMessage());
+			
+		}
+		
+		if(items.size() == 0) {
+			throw new ItemException("Not find any item which is sold.......!!");
+		}
+		
+		return items;
+		
+	}
+
+	@Override
+	public boolean removeTheItemFromTheList(int itemId, String itemName) throws ItemException {
+		
+		boolean status = false;
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("delete from sellerItemList where Item_Id = ? and Item_name = ?");
+			
+			ps.setInt(1, itemId);
+			ps.setString(2, itemName);
+
+			int rs = ps.executeUpdate();
+			
+			if(rs > 0) {
+				status = true;
+			}
+			else {
+				status = false;
+			}
+			
+		} catch (SQLException e) {
+			throw new ItemException(e.getMessage());
+		}
+		
+		return status;
 	}
 
 }
