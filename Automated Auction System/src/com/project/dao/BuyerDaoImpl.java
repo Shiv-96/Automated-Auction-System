@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.project.Exception.BuyerException;
 import com.project.beans.Buyer;
+import com.project.beans.ItemList;
 import com.project.utility.DBUtill;
 
 public class BuyerDaoImpl implements BuyerDao {
@@ -76,6 +79,76 @@ public class BuyerDaoImpl implements BuyerDao {
 		}
 		
 		return buyer;
+		
+	}
+
+	@Override
+	public List<ItemList> searchItemByCategory(String category) throws BuyerException {
+		
+		List<ItemList> items = new ArrayList<>();
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("select * from selleritemlist where category = ?");
+			
+			ps.setString(1, category);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int id = rs.getInt("Item_Id");
+				String name = rs.getString("Item_name");
+				int price = rs.getInt("Item_Price");
+				int count = rs.getInt("Item_Quantity");
+				String status = rs.getString("Sold_Unsold");
+				String cat = rs.getString("category");
+				String own = rs.getString("Owner");
+				
+				ItemList item = new ItemList(id, name, price, count, status, cat, own);
+				
+				items.add(item);
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return items;
+		
+	}
+
+	@Override
+	public List<ItemList> viewAllTheSeller() throws BuyerException {
+		
+		List<ItemList> items = new ArrayList<>();
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("select * from selleritemlist");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int id = rs.getInt("Item_Id");
+				String name = rs.getString("Item_name");
+				int price = rs.getInt("Item_Price");
+				int count = rs.getInt("Item_Quantity");
+				String status = rs.getString("Sold_Unsold");
+				String cat = rs.getString("category");
+				String own = rs.getString("Owner");
+				
+				ItemList item = new ItemList(id, name, price, count, status, cat, own);
+				
+				items.add(item);
+				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return items;
 		
 	}
 

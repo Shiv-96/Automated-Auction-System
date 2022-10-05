@@ -1,5 +1,6 @@
 package com.project.usecases;
 
+import java.sql.Date;
 import java.util.Scanner;
 
 import com.project.beans.ItemList;
@@ -42,6 +43,5 @@ public class CreateItemList {
 		System.out.println(result);
 		
 	}
-	
 	
 }
