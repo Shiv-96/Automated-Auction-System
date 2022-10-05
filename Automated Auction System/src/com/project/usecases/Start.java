@@ -174,7 +174,14 @@ public class Start {
 					if(ch == 4) {
 						break;
 					}
-					
+					else if(ch == 1) {
+						ViewItemsByCategory cat = new ViewItemsByCategory();
+						cat.viewItemByCategory();
+					}
+					else if(ch == 2) {
+						ViewAllTheSeller seller = new ViewAllTheSeller();
+						seller.viewAllTheSeller();
+					}
 				}
 			}
 		}

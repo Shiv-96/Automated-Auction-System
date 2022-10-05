@@ -19,7 +19,7 @@ public class ItemDaoImpl implements ItemDao {
 		
 		try (Connection conn = DBUtill.provideConnection()) {
 			
-			PreparedStatement ps = conn.prepareStatement("insert into SellerItemList (Item_name, Item_Price, Item_Quantity, Sold_Unsold, category, Owner) value(?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps = conn.prepareStatement("insert into SellerItemList (Item_name, Item_Price, Item_Quantity, Sold_Unsold, category, Owner, Launching_Date) value(?, ?, ?, ?, ?, ?, now())");
 			
 			ps.setString(1, item.getItem_name());
 			ps.setInt(2, item.getItem_price());
