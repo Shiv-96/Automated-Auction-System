@@ -145,7 +145,38 @@ public class Start {
 					}
 				}
 			}
-			
+			else if(c == 3) {
+				System.out.println("Do you have an account (Yes / No)");
+				String choice = sc.next();
+				if(choice.equalsIgnoreCase("no")) {
+					RegisterAsABuyer register = new RegisterAsABuyer();
+					register.registerBuyer();
+				}
+				System.out.println("Do you want to login? (Yes /No)");
+				String response = sc.next();
+				
+				boolean result = false;
+				
+				if(response.equalsIgnoreCase("yes")) {
+					LoginForBuyer login = new LoginForBuyer();
+					result = login.loginasaBuyer();
+				}
+				while(result) {
+					System.out.println("+++++++++++++++++++++++++++++++++++");
+					System.out.println("Press 1 for Search and view Items by category");
+					System.out.println("Press 2 for select and view all the seller and also their Item category wise");
+					System.out.println("Press 3 for select an items to buy");
+					System.out.println("Press 4 for exit the buyer section");
+					System.out.println("+++++++++++++++++++++++++++++++++++++");
+					
+					int ch = sc.nextInt();
+					
+					if(ch == 4) {
+						break;
+					}
+					
+				}
+			}
 		}
 		
 		System.out.println("Thank you using this application");
