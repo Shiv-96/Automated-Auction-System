@@ -50,8 +50,8 @@ public class Start {
 					System.out.println("Press 2 for update the item price or quantity");
 					System.out.println("Press 3 for adding a new Item in the list");
 					System.out.println("Press 4 for removing the Items from the list");
-					System.out.println("Press 4 for seeing the sold history");
-					System.out.println("Press 5 for exit the seller section");
+					System.out.println("Press 5 for seeing the sold history");
+					System.out.println("Press 6 for exit the seller section");
 					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
 					int choice = sc.nextInt();
 					
@@ -59,7 +59,7 @@ public class Start {
 						CreateItemList item = new CreateItemList();
 						item.createItem();
 					}
-					else if(choice == 5) {
+					else if(choice == 6) {
 						break;
 					}
 					else if(choice == 2) {
@@ -88,7 +88,9 @@ public class Start {
 								price.updateItemPrice();
 							}
 							else if(ch == 3) {
-								System.out.println("You want to add No. of items");
+								UpdateItemCount count = new UpdateItemCount();
+								count.updateCount();
+								
 							}
 							System.out.println("Press 1 for more");
 							System.out.println("Press 2 for exit");
@@ -98,12 +100,51 @@ public class Start {
 							}
 						}
 					}
-					
+					else if(choice == 3) {
+						boolean x = true;
+						while(x) {
+							CreateItemList item = new CreateItemList();
+							item.createItem();
+							
+							System.out.println("Press 1 for more");
+							System.out.println("Press 2 for exit");
+							int ch1 = sc.nextInt();
+							if(ch1 == 2) {
+								x = false;
+							}
+							
+						}
+						
+					}
+					else if(choice == 4) {
+						boolean x = true;
+						while(x) {
+							RemoveTheItem remove = new RemoveTheItem();
+							remove.removeTheItem();
+							
+							while(true) {
+								System.out.println("Do you want to delete more (Yes/No)");
+								String ch = sc.next();
+								if(ch.equalsIgnoreCase("Yes")) {
+									x = true;
+									break;
+								}
+								else if(ch.equalsIgnoreCase("No")) {
+									x = false;
+									break;
+								}
+								else {
+									System.out.println("Please Enter correct option");
+								}
+							}
+						}
+					}
+					else if(choice == 5) {
+						ViewSoldItem sold = new ViewSoldItem();
+						sold.getAllSoldItemList();
+					}
 				}
 			}
-			
-			
-			
 			
 		}
 		
