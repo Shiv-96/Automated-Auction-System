@@ -26,7 +26,31 @@ public class Start {
 				break;
 			}
 			else if(c == 1) {
-				System.out.println("Welcome Administrator");
+				System.out.println("Do you have an account? (Yes / No)");
+				String res = sc.next();
+				
+				if(res.equalsIgnoreCase("no")) {
+					
+					RegisterAsaAdministrator admin = new RegisterAsaAdministrator();
+					
+					admin.registerForAdministrator();
+					
+				}
+				else {
+					System.out.println("Do you want to login? (Yes / No)");
+					String response = sc.next();
+					
+					boolean result = false;
+					
+					if(response.equalsIgnoreCase("yes")) {
+						LoginForAdmin login = new LoginForAdmin();
+						
+						login.loginForAdmin();
+					}
+					else {
+						break;
+					}
+				}
 			}
 			else if(c == 2) {
 				System.out.println("Do you have an account? (Yes/No)");
