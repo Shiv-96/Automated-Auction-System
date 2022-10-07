@@ -37,6 +37,17 @@ public class ItemList {
 		this.item_category = item_category;
 		this.item_owner = item_owner;
 	}
+	
+	
+
+	public ItemList(int item_id, String item_name, int item_price, String item_category, String item_owner) {
+		super();
+		this.item_id = item_id;
+		this.item_name = item_name;
+		this.item_price = item_price;
+		this.item_category = item_category;
+		this.item_owner = item_owner;
+	}
 
 	public String getItem_name() {
 		return item_name;
