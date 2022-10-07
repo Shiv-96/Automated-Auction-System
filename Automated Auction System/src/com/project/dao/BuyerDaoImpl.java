@@ -152,4 +152,76 @@ public class BuyerDaoImpl implements BuyerDao {
 		
 	}
 
+	@Override
+	public ItemList updateSoldUnsoldValue(String itemname, String itemCategory, int id) throws BuyerException {
+		
+		ItemList item = null;
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("update selleritemlist set sold_unsold = 'Sold' where Item_name = ? and category = ? and Item_Id = ?");
+			
+			ps.setString(1, itemname);
+			ps.setString(2, itemCategory);
+			ps.setInt(3, id);
+			
+			int x = ps.executeUpdate();
+			
+			if(x > 0) {
+				PreparedStatement ps1 = conn.prepareStatement("select * from selleritemlist where Item_Id = ?");
+				
+				ps1.setInt(1, id);
+				
+				ResultSet rs = ps1.executeQuery();
+				
+				if(rs.next()) {
+					int id1 = rs.getInt("Item_Id");
+					String na = rs.getString("Item_name");
+					int price = rs.getInt("Item_Price");
+					String cat = rs.getString("category");
+					String own = rs.getString("Owner");
+
+					item = new ItemList(id1, na, price, cat, own);
+					
+				}
+				else {
+					throw new BuyerException("Item is not found");
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			throw new BuyerException(e.getMessage());
+		}
+		
+		
+		return item;
+		
+	}
+
+	@Override
+	public void updateTheQuality(int id, String itemName) throws BuyerException {
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("update selleritemlist set quality = 'Bad' where Item_Id = ? and Item_name = ?");
+			
+			ps.setInt(1, id);
+			ps.setString(2, itemName);
+			
+			int x = ps.executeUpdate();
+			
+			if(x > 0) {
+				System.out.println("Thank you for the review");
+			}
+			else {
+				throw new BuyerException("Item is not found");
+			}
+			
+		} catch (SQLException e) {
+			throw new BuyerException(e.getMessage());
+		}
+		
+	}
+
 }

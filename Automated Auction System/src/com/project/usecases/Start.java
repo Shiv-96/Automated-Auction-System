@@ -182,6 +182,10 @@ public class Start {
 						ViewAllTheSeller seller = new ViewAllTheSeller();
 						seller.viewAllTheSeller();
 					}
+					else if(ch == 3) {
+						SelectItemToBuy buy = new SelectItemToBuy();
+						buy.selectItemToBuy();
+					}
 				}
 			}
 		}

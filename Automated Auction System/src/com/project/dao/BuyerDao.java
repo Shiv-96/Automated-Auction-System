@@ -16,4 +16,9 @@ public interface BuyerDao {
 	
 	public List<ItemList> viewAllTheSeller() throws BuyerException;
 	
+	public ItemList updateSoldUnsoldValue(String itemname, String itemCategory, int id) throws BuyerException;
+	
+	
+	public void updateTheQuality(int id, String itemName) throws BuyerException;
+	
 }
