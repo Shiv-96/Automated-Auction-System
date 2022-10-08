@@ -36,20 +36,52 @@ public class Start {
 					admin.registerForAdministrator();
 					
 				}
-				else {
+				else if(res.equalsIgnoreCase("yes")) {
 					System.out.println("Do you want to login? (Yes / No)");
 					String response = sc.next();
 					
-					boolean result = false;
+					boolean result = true;
 					
 					if(response.equalsIgnoreCase("yes")) {
 						LoginForAdmin login = new LoginForAdmin();
 						
 						login.loginForAdmin();
 					}
-					else {
+					else if(response.equalsIgnoreCase("no")) {
 						break;
 					}
+					else {
+						System.out.println("Please choose correct option");
+					}
+					while(result) {
+						System.out.println("++++++++++++++++++++++++++++++++++++++");
+						System.out.println("Press 1 for See the buyer list");
+						System.out.println("Press 2 for See the Seller list");
+						System.out.println("Press 3 for See the dalily dispute result");
+						System.out.println("Press 4 for see the selling report");
+						System.out.println("Press 5 for solve the dispute report");
+						System.out.println("Press 6 for exit the Admin section");
+						System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+						
+						int choice = sc.nextInt();
+						
+						if(choice == 1) {
+							
+							SeeTheBuyerList buyer = new SeeTheBuyerList();
+							
+							buyer.viewBuyerList();
+							
+						}
+						else if(choice == 2) {
+							
+							SeeTheSellerList seller = new SeeTheSellerList();
+							seller.viewTheSellerList();
+						}
+						
+					}
+				}
+				else {
+					System.out.println("Please choose correct option");
 				}
 			}
 			else if(c == 2) {
