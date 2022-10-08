@@ -4,9 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.project.Exception.AdminException;
+import com.project.Exception.BuyerException;
+import com.project.Exception.SellerException;
 import com.project.beans.Admin;
+import com.project.beans.Buyer;
+import com.project.beans.Seller;
 import com.project.utility.DBUtill;
 
 public class AdminDaoImpl implements AdminDao {
@@ -75,6 +81,72 @@ public class AdminDaoImpl implements AdminDao {
 		}
 		
 		return admin;
+		
+	}
+
+	@Override
+	public List<Buyer> viewTheBuyerList() throws BuyerException {
+		
+		List<Buyer> buyers = new ArrayList<>();
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("select * from buyer");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				String na = rs.getString("Name");
+				int id = rs.getInt("buyer_Id");
+				String usname = rs.getString("Username");
+				String pass = rs.getString("Password");
+				String email = rs.getString("EmailId");
+				
+				Buyer buyer = new Buyer(id, na, usname, pass, email);
+				
+				buyers.add(buyer);
+				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return buyers;
+		
+	}
+
+	@Override
+	public List<Seller> viewTheSellerList() throws SellerException {
+		
+		List<Seller> sellers = new ArrayList<>();
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("select * from seller");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				String na = rs.getString("name");
+				int id = rs.getInt("sellerId");
+				String usname = rs.getString("username");
+				String pass = rs.getString("password");
+				String email = rs.getString("emailId");
+				
+				Seller seller = new Seller(id, usname, pass, email, na);
+				
+				sellers.add(seller);
+				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return sellers;
 		
 	}
 

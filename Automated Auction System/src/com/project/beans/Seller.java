@@ -23,6 +23,15 @@ public class Seller {
 
 	
 	
+	public Seller(int id, String username, String password, String emailId, String name) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.emailId = emailId;
+		this.name = name;
+	}
+
 	public String getName() {
 		return name;
 	}
