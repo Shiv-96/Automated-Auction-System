@@ -42,16 +42,23 @@ public class Start {
 					
 					boolean result = true;
 					
-					if(response.equalsIgnoreCase("yes")) {
-						LoginForAdmin login = new LoginForAdmin();
+					while(true) {
 						
-						login.loginForAdmin();
-					}
-					else if(response.equalsIgnoreCase("no")) {
-						break;
-					}
-					else {
-						System.out.println("Please choose correct option");
+						if(response.equalsIgnoreCase("yes")) {
+							LoginForAdmin login = new LoginForAdmin();
+							
+							login.loginForAdmin();
+							break;
+						}
+						else if(response.equalsIgnoreCase("no")) {
+							break;
+						}
+						else {
+							System.out.println("Please choose correct option");
+							result = false;
+							break;
+						}
+						
 					}
 					while(result) {
 						System.out.println("++++++++++++++++++++++++++++++++++++++");
@@ -76,6 +83,15 @@ public class Start {
 							
 							SeeTheSellerList seller = new SeeTheSellerList();
 							seller.viewTheSellerList();
+						}
+						else if(choice == 3) {
+							DailyDisputeResult dispute = new DailyDisputeResult();
+							
+							dispute.disputeResult();
+						}
+						else if(choice == 4) {
+							DailySellingReport selling = new DailySellingReport();
+							selling.sellingReport();
 						}
 						
 					}

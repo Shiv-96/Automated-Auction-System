@@ -19,5 +19,9 @@ public interface ItemDao {
 	
 	public boolean removeTheItemFromTheList(int itemId, String itemName) throws ItemException;
 	
+	public String getDisputeReport() throws ItemException;
+	
+	public String getSellingReport() throws ItemException;
+	
 	
 }
