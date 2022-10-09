@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.project.Exception.ItemException;
@@ -200,6 +201,67 @@ public class ItemDaoImpl implements ItemDao {
 		}
 		
 		return status;
+	}
+
+	@Override
+	public String getDisputeReport() throws ItemException {
+		
+		String message = "Don't have any problem on the Item";
+		
+		try (Connection conn  = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("select Launched_On, category, count(*)as Number_Of_Problem from sellerItemList where quality = 'Bad'");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				Date launch = rs.getDate("Launched_On");
+				String category = rs.getString("category");
+				int problem = rs.getInt("Number_Of_Problem");
+				
+				message = "In "+category+" section we have "+problem+" problem on "+launch;
+				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return message;
+		
+	}
+
+	@Override
+	public String getSellingReport() throws ItemException {
+		
+		String message = "Not Found any Item";
+		
+		try (Connection conn = DBUtill.provideConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement("select purchase_date, seller_name, buyer_name, count(*) as Number_Of_Product from details");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				Date purchase = rs.getDate("purchase_date");
+				String seller = rs.getString("seller_name");
+				String buyer = rs.getString("buyer_name");
+				int numberOfProduct = rs.getInt("number_of_product");
+				
+				message = buyer+" has purchased "+numberOfProduct+" product from "+seller+" on "+purchase;
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.getMessage();
+			
+		}
+		
+		return message;
+		
 	}
 
 }
